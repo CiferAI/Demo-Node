@@ -1,7 +1,3 @@
-# MUN Blockchain Mainnet Node
-
-Welcome to the MUN Blockchain Mainnet Node repository. MUN Blockchain is a state-of-the-art decentralized network designed to support fast, secure, and reliable transactions. By running your own mainnet node, you are participating in and contributing to the robustness, security, and overall health of the network.
-
 ## Prerequisites
 
 For optimal operation of your MUN Blockchain Node, we recommend the following system configuration:
@@ -27,7 +23,7 @@ sudo apt install build-essential jq -y
 
 ## Golang Installation:
 
-MUN Blockchain Node runs on Go. Install Go 1.20 as follows:
+Blockchain Node runs on Go. Install Go 1.20 as follows:
 ```
 wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh | bash -s -- --version 1.20
 source ~/.profile
@@ -40,10 +36,10 @@ go version
 // This command should return go version go1.20 linux/amd64.
 
 ## MUN Node Setup
-Clone the MUN Node repository:
+Clone the repository:
 
 ```
-git clone https://github.com/munblockchain/mun-node
+git clone https://github.com/CiferAI/demo-node
 cd mun-node
 ```
 
@@ -74,7 +70,7 @@ sudo cp $(which mund-manager) /usr/bin
 Initialize the validator with a moniker of your choice (example: solid-moon-rock):
 
 ```
-mund init [moniker_name] --chain-id mun-1
+mund init [moniker_name] --chain-id cifer
 ```
 
 Create a new wallet address, store the generated seeds, and add MUN to your wallet:
@@ -142,7 +138,7 @@ User, group, and DAEMON_HOME path can be obtained as follows:
 
 ```
 whoami  # Outputs user_name
-cd ~/.mun
+cd ~/.cifer
 pwd  # Outputs DAEMON_HOME path
 ```
 
@@ -150,24 +146,24 @@ Create log files and start running the node:
 
 ```
 make log-files
-sudo systemctl enable mund
-sudo systemctl start mund
+sudo systemctl enable ciferd
+sudo systemctl start ciferd
 ```
 
 To verify that your node is running properly:
 ```
-mund status
+ciferd status
 ```
 
 ## Becoming a Validator
-Once your node is fully synchronized with the network and you've secured some MUN, you can become a validator by staking your MUN. To check synchronization status, visit https://mainnet1rpc.mun.money/status and compare the latest block height with your node's block height, obtainable via http://[Your_Node_IP]:26657/status.
+Once your node is fully synchronized with the network and you've secured some CIF, you can become a validator by staking your CIF. To check synchronization status, visit https://mainnet1rpc.mun.money/status and compare the latest block height with your node's block height, obtainable via http://[Your_Node_IP]:26657/status.
 
-When ready, stake your MUN:
+When ready, stake your CIF:
 ```
-mund tx staking create-validator --from [wallet_name] --moniker [moniker_name] --pubkey $(mund tendermint show-validator) --chain-id mun-1 --keyring-backend test --amount 2000000000000000umun --commission-max-change-rate 0.01 --commission-max-rate 0.2 --commission-rate 0.1 --min-self-delegation 1 --fees 20000umun -y
+ciferd tx staking create-validator --from [wallet_name] --moniker [moniker_name] --pubkey $(ciferd tendermint show-validator) --chain-id cifer-1 --keyring-backend test --amount 2000000000000000ucif --commission-max-change-rate 0.01 --commission-max-rate 0.2 --commission-rate 0.1 --min-self-delegation 1 --fees 20000ucif -y
 ```
-Congratulations, you're now an active participant in the MUN Blockchain network! Your contributions make the network more secure, robust, and reliable.
+Congratulations, you're now an active participant in the CIF Blockchain network! Your contributions make the network more secure, robust, and reliable.
 
 ## Community Support
 
-If you encounter any issues while setting up your MUN Blockchain Node, don't hesitate to reach out to our friendly and supportive community on Discord. Our community members and developers are always ready to assist you!
+If you encounter any issues while setting up your CIF Blockchain Node, don't hesitate to reach out to our friendly and supportive community on Discord. Our community members and developers are always ready to assist you!
