@@ -1,6 +1,6 @@
 ## Prerequisites
 
-For optimal operation of your MUN Blockchain Node, we recommend the following system configuration:
+For optimal operation of your CIF Blockchain Node, we recommend the following system configuration:
 
 - CPU: 6 cores or more
 - Memory: 16GB or more
@@ -35,18 +35,18 @@ go version
 ```
 // This command should return go version go1.20 linux/amd64.
 
-## MUN Node Setup
+## CIF Node Setup
 Clone the repository:
 
 ```
 git clone https://github.com/CiferAI/demo-node
-cd mun-node
+cd demo-node
 ```
 
 Next, install the executables:
 
 ```
-sudo rm -rf ~/.mun
+sudo rm -rf ~/.cifer
 go mod tidy
 make install
 ```
@@ -54,39 +54,39 @@ Upon successful installation, proceed with the following directory setup:
 
 ```
 clear
-mkdir -p ~/.mun/upgrade_manager/upgrades
-mkdir -p ~/.mun/upgrade_manager/genesis/bin
+mkdir -p ~/.cifer/upgrade_manager/upgrades
+mkdir -p ~/.cifer/upgrade_manager/genesis/bin
 ```
 
 ## Genesis Binary and Upgrade Manager Setup
 Make a symbolic link of the genesis binary to the upgrade manager:
 
 ```
-cp $(which mund) ~/.mun/upgrade_manager/genesis/bin
-sudo cp $(which mund-manager) /usr/bin
+cp $(which ciferd) ~/.cifer/upgrade_manager/genesis/bin
+sudo cp $(which ciferd-manager) /usr/bin
 ```
 
 ## Node Initialization
 Initialize the validator with a moniker of your choice (example: solid-moon-rock):
 
 ```
-mund init [moniker_name] --chain-id cifer
+ciferd init [moniker_name] --chain-id cifer
 ```
 
-Create a new wallet address, store the generated seeds, and add MUN to your wallet:
+Create a new wallet address, store the generated seeds, and add CIF to your wallet:
 
 ```
-mund keys add [wallet_name] --keyring-backend test
+ciferd keys add [wallet_name] --keyring-backend test
 ```
 
 ## Genesis and P2P Configuration
 Fetch the genesis.json file from the genesis node:
 
-curl https://mainnet1rpc.mun.money/genesis | jq ".result.genesis" > ~/.mun/config/genesis.json
+curl https://mainnet1rpc.cifer.money/genesis | jq ".result.genesis" > ~/.cifer/config/genesis.json
 
 Next, update the seed in config.toml for P2P connection:
 ```
-nano ~/.mun/config/config.toml
+nano ~/.cifer/config/config.toml
 ```
 Add the following line:
 ```
@@ -94,22 +94,22 @@ seeds = "SEEDS"
 ```
 The SEEDS information can be requested from our Discord community.
 
-##  MUN Node Service Setup
+##  CIF Node Service Setup
 Ensure to replace [user_name], [group_name], and [DAEMON_HOME_PATH] with your specific system information.
 
 
 
-Create the service file /etc/systemd/system/mund.service with the following content:
+Create the service file /etc/systemd/system/ciferd.service with the following content:
 
 
 ```
-sudo nano /etc/systemd/system/mund.service
+sudo nano /etc/systemd/system/ciferd.service
 ```
 
 
 ```
 [Unit]
-Description=mund
+Description=ciferd
 Requires=network-online.target
 After=network-online.target
 
@@ -118,14 +118,14 @@ Restart=on-failure
 RestartSec=3
 User=root
 Group=root
-Environment=DAEMON_NAME=mund
-Environment=DAEMON_HOME=/root/.mun
+Environment=DAEMON_NAME=ciferd
+Environment=DAEMON_HOME=/root/.cifer
 Environment=DAEMON_ALLOW_DOWNLOAD_BINARIES=on
 Environment=DAEMON_RESTART_AFTER_UPGRADE=on
 PermissionsStartOnly=true
-ExecStart=/usr/bin/mund-manager start --pruning="nothing" --rpc.laddr "tcp://0.0.0.0:26657"
-StandardOutput=file:/var/log/mund/mund.log
-StandardError=file:/var/log/mund/mund_error.log
+ExecStart=/usr/bin/ciferd-manager start --pruning="nothing" --rpc.laddr "tcp://0.0.0.0:26657"
+StandardOutput=file:/var/log/ciferd/ciferd.log
+StandardError=file:/var/log/ciferd/ciferd_error.log
 ExecReload=/bin/kill -HUP $MAINPID
 KillSignal=SIGTERM
 LimitNOFILE=4096
@@ -156,7 +156,7 @@ ciferd status
 ```
 
 ## Becoming a Validator
-Once your node is fully synchronized with the network and you've secured some CIF, you can become a validator by staking your CIF. To check synchronization status, visit https://mainnet1rpc.mun.money/status and compare the latest block height with your node's block height, obtainable via http://[Your_Node_IP]:26657/status.
+Once your node is fully synchronized with the network and you've secured some CIF, you can become a validator by staking your CIF. To check synchronization status, visit https://mainnet1rpc.cifer.money/status and compare the latest block height with your node's block height, obtainable via http://[Your_Node_IP]:26657/status.
 
 When ready, stake your CIF:
 ```
